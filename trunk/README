@@ -1,0 +1,4 @@
+
+Email::Send::IO provides a Email::Send plugin to send mail via IO::All.  For
+more information, see `perldoc Email::Send::IO` and `perldoc IO::All`
+
