@@ -1,10 +1,14 @@
 package Email::Send::IO;
 use strict;
 
-use Return::Value;
+BEGIN {
+  local $Return::Value::NO_CLUCK = 1;
+  require Return::Value;
+  Return::Value->import;
+}
 
 use vars qw[$VERSION];
-$VERSION = '2.200';
+$VERSION = '2.201';
 
 use vars qw[@IO];
 @IO = ('=') unless @IO;
@@ -17,7 +21,7 @@ sub is_available {
 
 sub send {
     my ($class, $message, @args) = @_;
-    eval { require IO::All; IO::All->import };
+    eval { no warnings 'redefine'; require IO::All; IO::All->import };
     return failure "send: Loading IO::All failed: $@" if $@;
     @args = (@IO) unless @args;
     eval { io(@args)->append($message->as_string) };
